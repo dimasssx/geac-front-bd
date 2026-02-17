@@ -1,16 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { useAuth } from "@/contexts/AuthContext";
-import { authService } from "@/services/authService";
+import { loginAction } from "@/app/actions/auth";
 import { SignInData } from "@/types/auth";
 import { LoadingButton } from "@/components/LoadingButton";
+import Link from "next/link";
 
 export default function SignInPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { login } = useAuth();
 
   const [formData, setFormData] = useState<SignInData>({
     email: "",
@@ -18,28 +16,18 @@ export default function SignInPage() {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
 
-    try {
-      const data = await authService.login(formData);
+    const result = await loginAction(formData);
 
-      if (data.token) {
-        login(data.token);
-      }
-    } catch (error) {
-      console.error("Erro no login:", error);
-      setError((error as Error)?.message || "Ocorreu um erro inesperado.");
-    } finally {
+    if (result?.error) {
+      setError(result.error);
       setIsLoading(false);
     }
   };

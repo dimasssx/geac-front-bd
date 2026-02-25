@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { registerForEventAction, cancelRegistrationAction } from "@/app/actions/registrationActions";
-import { useRouter } from "next/navigation";
+import {
+  registerForEventAction,
+  cancelRegistrationAction,
+} from "@/app/actions/registrationActions";
+// import { useRouter } from "next/navigation"; // TODO rever isso aqui
 import Link from "next/link";
 
 interface EventRegistrationButtonProps {
@@ -19,7 +22,7 @@ export function EventRegistrationButton({
 }: Readonly<EventRegistrationButtonProps>) {
   const [isLoading, setIsLoading] = useState(false);
   const { user, isAuthenticated } = useAuth();
-  const router = useRouter();
+  // const router = useRouter(); // TODO rever isso aqui
 
   // O organizador não pode se inscrever no próprio evento
   if (isAuthenticated && user?.email === organizerEmail) {
@@ -41,7 +44,7 @@ export function EventRegistrationButton({
 
   const handleAction = async () => {
     setIsLoading(true);
-    
+
     try {
       if (isRegistered) {
         // Chama a Server Action de Cancelamento
@@ -52,8 +55,11 @@ export function EventRegistrationButton({
         await registerForEventAction(eventId);
         alert("Inscrição realizada com sucesso!");
       }
-    } catch (error: any) {
-      alert(error.message || "Ocorreu um erro ao processar sua solicitação.");
+    } catch (error) {
+      alert(
+        (error as Error).message ||
+          "Ocorreu um erro ao processar sua solicitação.",
+      );
     } finally {
       setIsLoading(false);
     }

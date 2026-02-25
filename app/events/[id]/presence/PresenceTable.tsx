@@ -9,13 +9,21 @@ interface AttendanceTableProps {
   initialRegistrations: RegistrationResponseDTO[];
 }
 
-export default function AttendanceTable({ eventId, initialRegistrations }: AttendanceTableProps) {
-  const [registrations, setRegistrations] = useState(initialRegistrations);
+export default function AttendanceTable({
+  eventId,
+  initialRegistrations,
+}: AttendanceTableProps) {
+  const [
+    registrations,
+    // setRegistrations
+  ] = useState(initialRegistrations); // TODO rever isso aqui
   const [isLoading, setIsLoading] = useState(false);
 
   // Inicializa o estado dos selecionados apenas com os que JÁ POSSUEM presença (attended: true)
   const [selectedUsers, setSelectedUsers] = useState<Set<string>>(
-    new Set(initialRegistrations.filter((r) => r.attended).map((r) => r.userId))
+    new Set(
+      initialRegistrations.filter((r) => r.attended).map((r) => r.userId),
+    ),
   );
 
   const toggleUser = (userId: string) => {
@@ -33,11 +41,11 @@ export default function AttendanceTable({ eventId, initialRegistrations }: Atten
     try {
       // Pega todos os IDs que estão marcados no checkbox agora
       const currentSelectedIds = Array.from(selectedUsers);
-      
+
       // Pega todos os IDs que NÃO estão marcados (para tirar a falta, caso o professor tenha errado)
       const currentUnselectedIds = registrations
-        .map(r => r.userId)
-        .filter(id => !selectedUsers.has(id));
+        .map((r) => r.userId)
+        .filter((id) => !selectedUsers.has(id));
 
       // 1. Salva quem ESTÁ presente (attended = true)
       if (currentSelectedIds.length > 0) {
@@ -50,15 +58,17 @@ export default function AttendanceTable({ eventId, initialRegistrations }: Atten
       }
 
       alert("Lista de presença atualizada com sucesso!");
-    } catch (error: any) {
-      alert(error.message || "Erro ao salvar presença");
+    } catch (error) {
+      alert((error as Error).message || "Erro ao salvar presença");
     } finally {
       setIsLoading(false);
     }
   };
 
   if (registrations.length === 0) {
-    return <p className="text-zinc-500">Nenhum aluno inscrito neste evento ainda.</p>;
+    return (
+      <p className="text-zinc-500">Nenhum aluno inscrito neste evento ainda.</p>
+    );
   }
 
   return (
@@ -75,7 +85,10 @@ export default function AttendanceTable({ eventId, initialRegistrations }: Atten
           </thead>
           <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
             {registrations.map((reg) => (
-              <tr key={reg.userId} className="hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors">
+              <tr
+                key={reg.userId}
+                className="hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors"
+              >
                 <td className="p-4">
                   <input
                     type="checkbox"
@@ -84,9 +97,15 @@ export default function AttendanceTable({ eventId, initialRegistrations }: Atten
                     onChange={() => toggleUser(reg.userId)}
                   />
                 </td>
-                <td className="p-4 font-medium text-zinc-900 dark:text-zinc-100">{reg.userName}</td>
-                <td className="p-4 text-zinc-500 dark:text-zinc-400">{reg.userEmail}</td>
-                <td className="p-4 text-zinc-500 dark:text-zinc-400">{reg.status}</td>
+                <td className="p-4 font-medium text-zinc-900 dark:text-zinc-100">
+                  {reg.userName}
+                </td>
+                <td className="p-4 text-zinc-500 dark:text-zinc-400">
+                  {reg.userEmail}
+                </td>
+                <td className="p-4 text-zinc-500 dark:text-zinc-400">
+                  {reg.status}
+                </td>
               </tr>
             ))}
           </tbody>

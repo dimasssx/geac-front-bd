@@ -246,6 +246,7 @@ export default async function EventDetails({
               <EventRegistrationButton
                 eventId={event.id}
                 isRegistered={event.isRegistered}
+                organizerEmail={event.organizerEmail}
               />
             </div>
           </div>

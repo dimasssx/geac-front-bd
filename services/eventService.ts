@@ -30,12 +30,13 @@ function mapBackendToEvent(dto: EventResponseDTO): Event {
     campus: (dto.location?.city?.toLowerCase() || "ondina") as Event["campus"],
     speakers: dto.speakers,
     capacity: dto.maxCapacity ?? 0,
-    registered: 0,
+    registered: dto.registeredCount ?? 0,
     requirements: dto.requirementDescription,
     organizer: dto.organizerName ?? "",
+    organizerEmail: dto.organizerEmail ?? "",
     organizerType: "Professor",
     tags: dto.tags,
-    isRegistered: false,
+    isRegistered: dto.isRegistered ?? false,
   };
 }
 

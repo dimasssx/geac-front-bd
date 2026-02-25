@@ -32,6 +32,7 @@ export interface Event {
   registered: number;
   requirements: string[];
   organizer: string;
+  organizerEmail: string;
   organizerType: string;
   image?: string;
   tags: string[];
@@ -85,6 +86,8 @@ export interface EventResponseDTO {
   requirementDescription: string[];
   tags: string[];
   speakers: string[];
+  registeredCount?: number;
+  isRegistered?: boolean;
 }
 
 export interface Location {
@@ -98,4 +101,12 @@ export interface Location {
   zipCode: string;
   referencePoint: string;
   capacity: number;
+}
+
+export interface RegistrationResponseDTO {
+  userId: string;
+  userName: string;
+  userEmail: string;
+  attended: boolean;
+  status: string;
 }

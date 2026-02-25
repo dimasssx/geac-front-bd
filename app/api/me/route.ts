@@ -27,6 +27,7 @@ export async function GET() {
     }
 
     const user = {
+      id: decoded.id,
       name: decoded.name,
       email: decoded.sub,
       role: decoded.role,

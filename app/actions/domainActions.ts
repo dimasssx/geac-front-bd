@@ -1,5 +1,6 @@
 "use server";
 
+import { OrganizerResponseDTO } from "@/types/organizer";
 import { cookies } from "next/headers";
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 
@@ -33,4 +34,8 @@ export async function getRequirements() {
 }
 export async function getTags() {
   return fetchDomain("/tags");
+}
+
+export async function getOrganizers(): Promise<OrganizerResponseDTO[]> {
+  return fetchDomain("/organizers");
 }

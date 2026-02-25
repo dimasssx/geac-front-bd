@@ -27,6 +27,12 @@ const NAV_CONFIG = {
       icon: "🎓",
       roles: ["STUDENT", "PROFESSOR"],
     },
+    {
+      href: "/requests",
+      label: "Solicitar Acesso",
+      icon: "🔑",
+      roles: ["STUDENT", "PROFESSOR"],
+    },
   ],
   professorOnly: [
     {

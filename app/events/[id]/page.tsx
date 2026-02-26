@@ -130,8 +130,8 @@ export default async function EventDetails({
                 Requisitos
               </h3>
               <ul className="list-disc list-inside space-y-2 text-zinc-600 dark:text-zinc-300 ml-1">
-                {event.requirements.map((req, index) => (
-                  <li key={index}>{req}</li>
+                {event.requirements.map((req) => (
+                  <li key={req.id}>{req.description}</li>
                 ))}
               </ul>
             </div>

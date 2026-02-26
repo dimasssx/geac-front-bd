@@ -18,7 +18,9 @@ export const mockEvents: Event[] = [
     ],
     capacity: 200,
     registered: 145,
-    requirements: ["Aberto a todos os alunos e corpo docente"],
+    requirements: [
+      { id: 1, description: "Aberto a todos os alunos e corpo docente" },
+    ],
     organizer: "Departamento de Ciência da Computação",
     organizerEmail: "dcc@ufba.br",
     organizerType: "Departamento",
@@ -41,8 +43,8 @@ export const mockEvents: Event[] = [
     capacity: 1000,
     registered: 687,
     requirements: [
-      "Entrada gratuita",
-      "Inscrição necessária para vales-alimentação",
+      { id: 2, description: "Entrada gratuita" },
+      { id: 3, description: "Inscrição necessária para vales-alimentação" },
     ],
     organizer: "Associação de Estudantes Internacionais",
     organizerEmail: "aei@ufba.br",
@@ -69,7 +71,11 @@ export const mockEvents: Event[] = [
     capacity: 100,
     registered: 92,
     requirements: [
-      "Recomendado para estudantes de Ciências Ambientais e áreas relacionadas",
+      {
+        id: 4,
+        description:
+          "Recomendado para estudantes de Ciências Ambientais e áreas relacionadas",
+      },
     ],
     organizer: "Centro de Ciências Agrárias e Ambientais",
     organizerEmail: "ccaa@ufba.br",
@@ -95,8 +101,8 @@ export const mockEvents: Event[] = [
     capacity: 500,
     registered: 423,
     requirements: [
-      "Trazer currículos impressos",
-      "Traje esporte fino recomendado",
+      { id: 5, description: "Trazer currículos impressos" },
+      { id: 6, description: "Traje esporte fino recomendado" },
     ],
     organizer: "Escritório de Serviços de Carreira",
     organizerEmail: "carreiras@ufba.br",
@@ -123,8 +129,8 @@ export const mockEvents: Event[] = [
     capacity: 50,
     registered: 48,
     requirements: [
-      "Trazer notebook",
-      "Conhecimento básico de marketing é útil",
+      { id: 7, description: "Trazer notebook" },
+      { id: 8, description: "Conhecimento básico de marketing é útil" },
     ],
     organizer: "Associação de Estudantes Ociosos",
     organizerEmail: "aeo@ufba.br",
@@ -150,7 +156,7 @@ export const mockEvents: Event[] = [
     ],
     capacity: 80,
     registered: 65,
-    requirements: ["Aberto a todos os estudantes"],
+    requirements: [{ id: 9, description: "Aberto a todos os estudantes" }],
     organizer: "Centro de Bem-Estar Estudantil",
     organizerEmail: "bemestar@ufba.br",
     organizerType: "Centro Acadêmico",
@@ -175,7 +181,10 @@ export const mockEvents: Event[] = [
     ],
     capacity: 250,
     registered: 198,
-    requirements: ["Estudantes: grátis", "$5 para corpo docente/funcionários"],
+    requirements: [
+      { id: 10, description: "Estudantes: grátis" },
+      { id: 11, description: "$5 para corpo docente/funcionários" },
+    ],
     organizer: "Departamento de Música",
     organizerEmail: "musica@ufba.br",
     organizerType: "Departamento",
@@ -200,7 +209,12 @@ export const mockEvents: Event[] = [
     ],
     capacity: 150,
     registered: 134,
-    requirements: ["Recomendado entendimento básico de criptomoedas"],
+    requirements: [
+      {
+        id: 12,
+        description: "Recomendado entendimento básico de criptomoedas",
+      },
+    ],
     organizer: "Clube de Finanças e Tecnologia",
     organizerEmail: "cft@ufba.br",
     organizerType: "Grupo Estudantil",

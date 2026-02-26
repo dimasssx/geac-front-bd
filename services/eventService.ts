@@ -31,7 +31,7 @@ function mapBackendToEvent(dto: EventResponseDTO): Event {
     speakers: dto.speakers,
     capacity: dto.maxCapacity ?? 0,
     registered: dto.registeredCount ?? 0,
-    requirements: dto.requirementDescription,
+    requirements: dto.requirements ?? [],
     organizer: dto.organizerName ?? "",
     organizerEmail: dto.organizerEmail ?? "",
     organizerType: "Professor",

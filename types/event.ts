@@ -22,7 +22,7 @@ export interface Event {
   speakers: string[];
   capacity: number;
   registered: number;
-  requirements: string[];
+  requirements: Array<{ id: number; description: string }>;
   organizer: string;
   organizerEmail: string;
   organizerType: string;
@@ -76,8 +76,7 @@ export interface EventResponseDTO {
   location: Location;
   organizerName: string;
   organizerEmail: string;
-  reqId: number;
-  requirementDescription: string[];
+  requirements: Array<{ id: number; description: string }>;
   tags: string[];
   speakers: string[];
   registeredCount?: number;

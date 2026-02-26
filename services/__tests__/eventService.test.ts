@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach, Mock } from "vitest";
 import { eventService } from "../eventService";
-import { on } from "events";
 
 vi.mock("next/headers", () => ({
   cookies: () => ({
@@ -27,7 +26,7 @@ const mockEventsResponse = [
     speakers: undefined,
     capacity: 0,
     registered: 0,
-    requirements: undefined,
+    requirements: [],
     organizer: "",
     organizerEmail: "",
     organizerType: "Professor",
@@ -48,7 +47,7 @@ const mockEventsResponse = [
     speakers: undefined,
     capacity: 0,
     registered: 0,
-    requirements: undefined,
+    requirements: [],
     organizer: "",
     organizerEmail: "",
     organizerType: "Professor",
@@ -108,7 +107,7 @@ describe("eventService", () => {
       speakers: undefined,
       capacity: 0,
       registered: 0,
-      requirements: undefined,
+      requirements: [],
       organizer: "",
       organizerEmail: "",
       organizerType: "Professor",

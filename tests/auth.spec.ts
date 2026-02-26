@@ -53,7 +53,6 @@ test.describe("Fluxo de Autenticação Completo", () => {
   test("Cenário 4: Fluxo Completo -> Cadastro, Login com Sucesso e Logout", async ({
     page,
   }) => {
-    console.log(`Criando usuário: ${userData.email}`);
     await page.goto("/signup");
 
     await page.getByLabel(/nome/i).fill(userData.name);

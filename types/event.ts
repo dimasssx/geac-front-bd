@@ -9,14 +9,6 @@ export type EventCategory =
   | "festival"
   | "outro";
 
-export type Campus =
-  | "reitoria"
-  | "ondina"
-  | "sao lazaro"
-  | "canela"
-  | "graca"
-  | "federacao";
-
 export interface Event {
   id: string;
   title: string;
@@ -26,7 +18,7 @@ export interface Event {
   startTime: string;
   endTime: string;
   location: string;
-  campus: Campus;
+  campus: string;
   speakers: string[];
   capacity: number;
   registered: number;
@@ -100,6 +92,7 @@ export interface Location {
   state: string;
   zipCode: string;
   referencePoint: string;
+  campus: string;
   capacity: number;
 }
 

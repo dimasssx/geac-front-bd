@@ -25,7 +25,14 @@ export default function EventsContent({
     const categories = new Set(
       initialEvents.map((event) => event.category).filter(Boolean),
     );
-    return Array.from(categories).sort();
+    return Array.from(categories).sort((a, b) => a.localeCompare(b));
+  }, [initialEvents]);
+
+  const availableCampuses = useMemo(() => {
+    const campuses = new Set(
+      initialEvents.map((event) => event.campus).filter(Boolean),
+    );
+    return Array.from(campuses).sort((a, b) => a.localeCompare(b));
   }, [initialEvents]);
 
   const filteredEvents = useMemo(() => {
@@ -96,6 +103,7 @@ export default function EventsContent({
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
           availableCategories={availableCategories}
+          availableCampuses={availableCampuses}
         />
 
         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">

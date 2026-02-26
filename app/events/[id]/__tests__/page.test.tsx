@@ -70,7 +70,7 @@ describe("EventDetails Page", () => {
     render(jsx);
 
     expect(screen.getByText("Evento Teste")).toBeInTheDocument();
-    expect(screen.getByText("Campus A Campus")).toBeInTheDocument();
+    expect(screen.getByText("Campus A")).toBeInTheDocument();
   });
 
   const categories = [

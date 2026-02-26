@@ -22,7 +22,7 @@ const mockEventsResponse = [
     startTime: "",
     endTime: "",
     location: "Local Indefinido",
-    campus: "ondina",
+    campus: "Campus Desconhecido",
     speakers: undefined,
     capacity: 0,
     registered: 0,
@@ -42,7 +42,7 @@ const mockEventsResponse = [
     startTime: "",
     endTime: "",
     location: "Local Indefinido",
-    campus: "ondina",
+    campus: "Campus Desconhecido",
     speakers: undefined,
     capacity: 0,
     registered: 0,
@@ -67,8 +67,6 @@ describe("eventService", () => {
     });
 
     const events = await eventService.getAllEvents();
-
-    console.log(events[1]);
 
     expect(events).toEqual(mockEventsResponse);
 
@@ -103,7 +101,7 @@ describe("eventService", () => {
       startTime: "",
       endTime: "",
       location: "Local Indefinido",
-      campus: "ondina",
+      campus: "Campus Desconhecido",
       speakers: undefined,
       capacity: 0,
       registered: 0,
@@ -121,8 +119,6 @@ describe("eventService", () => {
     });
 
     const event = await eventService.getEventById("123");
-
-    console.log(event);
 
     expect(event).toEqual(mockEvent);
     expect(global.fetch).toHaveBeenCalledWith(

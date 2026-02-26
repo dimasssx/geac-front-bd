@@ -201,7 +201,7 @@ export default async function EventDetails({
                       {event.location}
                     </p>
                     <p className="text-sm text-zinc-500 capitalize">
-                      {event.campus} Campus
+                      {event.campus}
                     </p>
                   </div>
                 </div>

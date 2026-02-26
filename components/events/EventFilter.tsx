@@ -12,7 +12,16 @@ interface EventFilterProps {
   selectedDate: string;
   setSelectedDate: (value: string) => void;
   availableCategories: string[];
+  availableCampuses: string[];
 }
+
+const formatTitleCase = (text: string) => {
+  if (!text) return "";
+  return text
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+};
 
 export function EventFilter({
   searchTerm,
@@ -24,6 +33,7 @@ export function EventFilter({
   selectedDate,
   setSelectedDate,
   availableCategories,
+  availableCampuses,
 }: Readonly<EventFilterProps>) {
   return (
     <div className="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-sm border border-zinc-200 dark:border-zinc-800 mb-8">
@@ -66,7 +76,7 @@ export function EventFilter({
             <option value="">Todas as Categorias</option>
             {availableCategories.map((cat) => (
               <option key={cat} value={cat}>
-                {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                {formatTitleCase(cat)}
               </option>
             ))}
           </select>
@@ -86,12 +96,11 @@ export function EventFilter({
             className="w-full px-3 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow"
           >
             <option value="">Todos os Campus</option>
-            <option value="reitoria">Reitoria</option>
-            <option value="ondina">Ondina</option>
-            <option value="sao lazaro">São Lázaro</option>
-            <option value="canela">Canela</option>
-            <option value="graca">Graca</option>
-            <option value="federacao">Federação</option>
+            {availableCampuses.map((campus) => (
+              <option key={campus} value={campus}>
+                {formatTitleCase(campus)}
+              </option>
+            ))}
           </select>
         </div>
 

@@ -27,7 +27,7 @@ function mapBackendToEvent(dto: EventResponseDTO): Event {
     location: dto.onlineLink
       ? "Evento Online"
       : (dto.location?.name ?? "Local Indefinido"),
-    campus: (dto.location?.city?.toLowerCase() || "ondina") as Event["campus"],
+    campus: dto.location?.campus?.toLowerCase() || "Campus Desconhecido",
     speakers: dto.speakers,
     capacity: dto.maxCapacity ?? 0,
     registered: dto.registeredCount ?? 0,

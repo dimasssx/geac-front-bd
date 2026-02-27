@@ -1,8 +1,8 @@
 "use client";
 
 interface EventTabsProps {
-  activeTab: "proximos" | "disponiveis" | "todos";
-  setActiveTab: (tab: "proximos" | "disponiveis" | "todos") => void;
+  activeTab: "proximos" | "disponiveis" | "todos" | "cancelados" | "finalizados";
+  setActiveTab: (tab: "proximos" | "disponiveis" | "todos" | "cancelados" | "finalizados") => void;
 }
 
 export function EventTabs({
@@ -13,6 +13,8 @@ export function EventTabs({
     { id: "proximos", label: "Próximos" },
     { id: "disponiveis", label: "Disponíveis" },
     { id: "todos", label: "Todos os Eventos" },
+    { id: "cancelados", label: "Cancelados"},
+    { id: "finalizados", label: "Finalizados"}
   ] as const;
 
   return (

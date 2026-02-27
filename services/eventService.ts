@@ -38,6 +38,7 @@ function mapBackendToEvent(dto: EventResponseDTO): Event {
     tags: dto.tags,
     isRegistered: dto.isRegistered ?? false,
     onlineLink: dto.onlineLink ?? "",
+    status:dto.status
   };
 }
 

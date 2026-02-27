@@ -30,6 +30,7 @@ export interface Event {
   tags: string[];
   isRegistered?: boolean;
   onlineLink: string;
+  status?: string; // todo: olha aqui dps pra ve se n quebra nada
 }
 
 export interface EventRequestDTO {

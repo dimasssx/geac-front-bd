@@ -45,3 +45,22 @@ export async function createOrganizerRequestAction(
     return { error: "Erro de conexão com o servidor." };
   }
 }
+
+export async function getCurrentUserId() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+
+  if (!token) return null;
+
+  try {
+    const payloadBase64 = token.split(".")[1];
+    const decodedPayload = Buffer.from(payloadBase64, "base64").toString(
+      "utf-8",
+    );
+    const { id } = JSON.parse(decodedPayload);
+    return String(id);
+  } catch (error) {
+    console.error("Erro ao decodificar token:", error);
+    return null;
+  }
+}

@@ -39,6 +39,8 @@ export interface Event {
   isRegistered: boolean;
   onlineLink: string;
   status: EventStatus;
+  userRegistrationStatus: string;
+  userAttended: boolean;
 }
 
 export interface EventRequestDTO {
@@ -57,19 +59,6 @@ export interface EventRequestDTO {
   orgId: string;
 }
 
-export interface LocationResponseDTO {
-  id: number;
-  name: string;
-  street: string;
-  number: string;
-  neighborhood: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  referencePoint: string;
-  capacity: number;
-}
-
 export interface EventResponseDTO {
   id: string;
   title: string;
@@ -83,17 +72,19 @@ export interface EventResponseDTO {
   createdAt: string;
   categoryId: number;
   categoryName: string;
-  location: Location;
+  location: LocationResponseDTO;
   organizerName: string;
   organizerEmail: string;
-  requirements: Array<{ id: number; description: string }>;
+  requirements: RequirementResponseDTO[];
   tags: string[];
   speakers: string[];
-  registeredCount?: number;
-  isRegistered?: boolean;
+  registeredCount: number;
+  isRegistered: boolean;
+  userRegistrationStatus: string;
+  userAttended: boolean;
 }
 
-export interface Location {
+export interface LocationResponseDTO {
   id: number;
   name: string;
   street: string;
@@ -102,9 +93,14 @@ export interface Location {
   city: string;
   state: string;
   zipCode: string;
-  referencePoint: string;
   campus: string;
+  referencePoint: string;
   capacity: number;
+}
+
+export interface RequirementResponseDTO {
+  id: number;
+  description: string;
 }
 
 export interface RegistrationResponseDTO {

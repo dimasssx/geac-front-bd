@@ -35,9 +35,11 @@ function mapBackendToEvent(dto: EventResponseDTO): Event {
     organizerEmail: dto.organizerEmail ?? "",
     organizerType: "Professor",
     tags: dto.tags,
-    isRegistered: dto.isRegistered ?? false,
     onlineLink: dto.onlineLink ?? "",
     status: dto.status,
+    isRegistered: dto.isRegistered ?? false,
+    userRegistrationStatus: dto.userRegistrationStatus ?? "",
+    userAttended: dto.userAttended ?? false,
   };
 }
 

@@ -33,6 +33,8 @@ const mockEventsResponse = [
     tags: undefined,
     isRegistered: false,
     onlineLink: "",
+    userRegistrationStatus: "",
+    userAttended: false,
   },
   {
     id: "2",
@@ -54,6 +56,8 @@ const mockEventsResponse = [
     tags: undefined,
     isRegistered: false,
     onlineLink: "",
+    userRegistrationStatus: "",
+    userAttended: false,
   },
 ];
 
@@ -114,6 +118,8 @@ describe("eventService", () => {
       tags: undefined,
       isRegistered: false,
       onlineLink: "",
+      userRegistrationStatus: "",
+      userAttended: false,
     };
 
     (global.fetch as unknown as Mock).mockResolvedValue({

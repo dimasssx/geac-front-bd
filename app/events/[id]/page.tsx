@@ -17,8 +17,15 @@ import {
 import { EventRegistrationButton } from "@/components/events/EventRegistrationButton";
 import { Event, EventStatus } from "@/types/event";
 import { JSX } from "react";
-import { getUserOrganizers } from "@/app/actions/domainActions";
+import {
+  getEventEvaluations,
+  getUserOrganizers,
+} from "@/app/actions/domainActions";
 import { OrganizerResponseDTO } from "@/types/organizer";
+import { EventEvaluationForm } from "@/components/events/EventEvaluationForm";
+import { EvaluationResponseDTO } from "@/types/evaluations";
+import { EventEvaluationsList } from "@/components/events/EventEvaluationsList";
+import { getCurrentUserId } from "@/app/actions/userActions";
 
 const getCategoryColor = (category: string) => {
   switch (category) {
@@ -49,6 +56,9 @@ export default async function EventDetails({
   const { id } = await params;
   let event: Event;
   let organizers: OrganizerResponseDTO[] = [];
+  let evaluations: EvaluationResponseDTO[] = [];
+  let currentUserId: string | null = null;
+  let hasAlreadyEvaluated = false;
 
   try {
     event = await eventService.getEventById(id);
@@ -62,6 +72,20 @@ export default async function EventDetails({
     organizers = await getUserOrganizers();
   } catch (error) {
     console.error("Erro ao buscar organizadores:", error);
+  }
+
+  if (event.status === EventStatus.COMPLETED) {
+    try {
+      evaluations = await getEventEvaluations(id);
+      currentUserId = await getCurrentUserId();
+      if (currentUserId) {
+        hasAlreadyEvaluated = evaluations.some(
+          (ev) => String(ev.userId) === currentUserId,
+        );
+      }
+    } catch (error) {
+      console.error("Erro ao buscar avaliações do evento:", error);
+    }
   }
 
   const dateObj = new Date(event.date + "T00:00:00");
@@ -91,8 +115,11 @@ export default async function EventDetails({
 
   const spotsLeft = event.capacity - event.registered;
   const isFull = spotsLeft <= 0;
+  const isAllowedToEvaluate =
+    event.status === EventStatus.COMPLETED &&
+    event.isRegistered &&
+    event.userAttended;
 
-  // TODO Ajustar isso quando o backend estiver pronto
   const isCanceled = event.status === EventStatus.CANCELLED;
   const isCompleted = event.status === EventStatus.COMPLETED;
 
@@ -239,6 +266,38 @@ export default async function EventDetails({
                 ))}
               </div>
             </div>
+
+            {event.status === EventStatus.COMPLETED && (
+              <>
+                <hr className="border-zinc-200 dark:border-zinc-800 my-8" />
+                <EventEvaluationsList evaluations={evaluations} />
+                <div className="mt-12">
+                  {hasAlreadyEvaluated ? (
+                    <div className="bg-green-50 dark:bg-green-900/20 rounded-xl p-6 text-center border border-green-200 dark:border-green-800 mt-8">
+                      <h3 className="text-lg font-bold text-green-900 dark:text-green-400 mb-2">
+                        Avaliação Registrada
+                      </h3>
+                      <p className="text-sm text-green-700 dark:text-green-500">
+                        Você já enviou sua avaliação para este evento.
+                        Agradecemos muito pelo seu feedback!
+                      </p>
+                    </div>
+                  ) : isAllowedToEvaluate ? (
+                    <EventEvaluationForm eventId={event.id} />
+                  ) : (
+                    <div className="bg-zinc-100 dark:bg-zinc-800/50 rounded-xl p-6 text-center border border-zinc-200 dark:border-zinc-700/50 mt-8">
+                      <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-2">
+                        Sua Opinião
+                      </h3>
+                      <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                        Apenas participantes confirmados que registraram
+                        presença podem enviar avaliações.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
           </div>
 
           <div className="lg:col-span-1">

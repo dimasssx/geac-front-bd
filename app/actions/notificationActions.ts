@@ -34,6 +34,7 @@ export async function getUnreadCount(): Promise<number> {
     if (!res.ok) return 0;
     return await res.json();
   } catch (error) {
+    void error;
     return 0;
   }
 }
@@ -49,6 +50,7 @@ export async function getUnreadNotifications(): Promise<
     if (!res.ok) return [];
     return await res.json();
   } catch (error) {
+    void error;
     return [];
   }
 }

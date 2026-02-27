@@ -1,6 +1,5 @@
 import { cookies } from "next/headers";
 import { Event, EventResponseDTO } from "@/types/event";
-import { mockEvents } from "@/data/mockData";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 
@@ -84,13 +83,6 @@ export const eventService = {
     });
 
     if (!res.ok) {
-      const mockEvent = mockEvents.find((event) => event.id === id);
-      if (mockEvent) {
-        console.warn(
-          `Falha ao buscar evento ${id}. Retornando dados mockados.`,
-        );
-        return mockEvent;
-      }
       throw new Error("Evento não encontrado");
     }
 

@@ -1,6 +1,7 @@
 import { Calendar, Clock, MapPin, Users } from "lucide-react";
 import Link from "next/link";
-import { Event } from "@/types/event";
+import { Event, EventStatus } from "@/types/event";
+import { JSX } from "react";
 
 interface EventCardProps {
   event: Event;
@@ -18,15 +19,47 @@ export function EventCard({ event }: Readonly<EventCardProps>) {
     year: "numeric",
   });
 
-  const getRegistrationBadge = () => {
-    if (event.isRegistered) {
-      return (
-        <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-800 ml-2">
-          Inscrito
-        </span>
-      );
+  const now = new Date();
+
+  const todayStr = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Sao_Paulo",
+  }).format(now);
+
+  const currentTimeStr = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "America/Sao_Paulo",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(now);
+
+  const isPastDate = event.date < todayStr;
+  const isPastTime = event.date === todayStr && event.endTime < currentTimeStr;
+  const isPast = isPastDate || isPastTime;
+
+  const getRegistrationBadge = (): JSX.Element | null => {
+    const styles = {
+      cancelled:
+        "px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-800 ml-2",
+      past: "px-2.5 py-0.5 rounded-full text-xs font-medium bg-zinc-100 text-zinc-500 border border-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:border-zinc-700 ml-2",
+      registered:
+        "px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-800 ml-2",
+    };
+
+    if (event.status === EventStatus.CANCELLED) {
+      return <span className={styles.cancelled}>Cancelado</span>;
     }
-    return null;
+
+    if (!isPast && !event.isRegistered) {
+      return null;
+    }
+
+    return (
+      <>
+        {isPast && <span className={styles.past}>Evento já realizado</span>}
+        {event.isRegistered && (
+          <span className={styles.registered}>Inscrito</span>
+        )}
+      </>
+    );
   };
 
   const getCategoryColor = (category: string) => {
@@ -63,7 +96,7 @@ export function EventCard({ event }: Readonly<EventCardProps>) {
             {event.category}
           </span>
           {getRegistrationBadge()}
-          {isFewSpots && (
+          {isFewSpots && !isPast && (
             <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 border border-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-800">
               Poucas vagas
             </span>

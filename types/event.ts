@@ -9,6 +9,14 @@ export type EventCategory =
   | "festival"
   | "outro";
 
+export enum EventStatus {
+  UPCOMING = "UPCOMING",
+  ACTIVE = "ACTIVE",
+  IN_PROGRESS = "IN_PROGRESS",
+  COMPLETED = "COMPLETED",
+  CANCELLED = "CANCELLED",
+}
+
 export interface Event {
   id: string;
   title: string;
@@ -28,9 +36,9 @@ export interface Event {
   organizerType: string;
   image?: string;
   tags: string[];
-  isRegistered?: boolean;
+  isRegistered: boolean;
   onlineLink: string;
-  status?: string; // todo: olha aqui dps pra ve se n quebra nada
+  status: EventStatus;
 }
 
 export interface EventRequestDTO {
@@ -71,7 +79,7 @@ export interface EventResponseDTO {
   endTime: string;
   workloadHours: number;
   maxCapacity: number;
-  status: string;
+  status: EventStatus;
   createdAt: string;
   categoryId: number;
   categoryName: string;

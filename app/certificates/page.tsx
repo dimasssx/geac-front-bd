@@ -1,6 +1,8 @@
 import { getMyCertificates } from "@/app/actions/certificateActions";
 import { CertificateList } from "./CertificateList";
 
+export const dynamic = "force-dynamic";
+
 export default async function CertificadosPage() {
   const { data: certificates, error } = await getMyCertificates();
 

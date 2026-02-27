@@ -15,8 +15,10 @@ import {
   XCircle,
 } from "lucide-react";
 import { EventRegistrationButton } from "@/components/events/EventRegistrationButton";
-import { Event } from "@/types/event";
+import { Event, EventStatus } from "@/types/event";
 import { JSX } from "react";
+import { getUserOrganizers } from "@/app/actions/domainActions";
+import { OrganizerResponseDTO } from "@/types/organizer";
 
 const getCategoryColor = (category: string) => {
   switch (category) {
@@ -46,6 +48,7 @@ export default async function EventDetails({
 }) {
   const { id } = await params;
   let event: Event;
+  let organizers: OrganizerResponseDTO[] = [];
 
   try {
     event = await eventService.getEventById(id);
@@ -53,6 +56,12 @@ export default async function EventDetails({
   } catch (error) {
     console.error(error);
     return notFound();
+  }
+
+  try {
+    organizers = await getUserOrganizers();
+  } catch (error) {
+    console.error("Erro ao buscar organizadores:", error);
   }
 
   const dateObj = new Date(event.date + "T00:00:00");
@@ -84,8 +93,8 @@ export default async function EventDetails({
   const isFull = spotsLeft <= 0;
 
   // TODO Ajustar isso quando o backend estiver pronto
-  const isCanceled = event.status === "CANCELLED";
-  const isCompleted = event.status === "COMPLETED";
+  const isCanceled = event.status === EventStatus.CANCELLED;
+  const isCompleted = event.status === EventStatus.COMPLETED;
 
   const handleTopEventTag = (
     isCanceled: boolean,
@@ -127,64 +136,6 @@ export default async function EventDetails({
       );
     }
     return null;
-  };
-
-  const handleRegistationButton = (
-    isCanceled: boolean,
-    isPast: boolean,
-    isCompleted: boolean,
-    isFull: boolean,
-    event: Event,
-  ): JSX.Element => {
-    if (isCanceled) {
-      return (
-        <button
-          disabled
-          className="w-full py-3 px-4 bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 rounded-md font-medium cursor-not-allowed"
-        >
-          Evento Cancelado
-        </button>
-      );
-    }
-    if (isCompleted) {
-      return (
-        <button
-          disabled
-          className="w-full py-3 px-4 bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400 rounded-md font-medium cursor-not-allowed"
-        >
-          Evento Finalizado
-        </button>
-      );
-    }
-    if (isPast) {
-      return (
-        <button
-          disabled
-          className="w-full py-3 px-4 bg-zinc-200 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-500 rounded-md font-medium cursor-not-allowed"
-        >
-          Inscrições Encerradas
-        </button>
-      );
-    }
-
-    if (isFull && !event.isRegistered) {
-      return (
-        <button
-          disabled
-          className="w-full py-3 px-4 bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400 rounded-md font-medium cursor-not-allowed"
-        >
-          Vagas Esgotadas
-        </button>
-      );
-    }
-
-    return (
-      <EventRegistrationButton
-        eventId={event.id}
-        isRegistered={event.isRegistered}
-        organizerEmail={event.organizerEmail}
-      />
-    );
   };
 
   return (
@@ -295,7 +246,6 @@ export default async function EventDetails({
               <h3 className="text-lg font-semibold text-zinc-900 dark:text-white mb-6">
                 Detalhes do Evento
               </h3>
-
               <div className="space-y-6">
                 {event.onlineLink && !isPast && !isCanceled && (
                   <div className="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/50 rounded-lg">
@@ -409,16 +359,17 @@ export default async function EventDetails({
                   </div>
                 </div>
               </div>
-
               <hr className="my-6 border-zinc-200 dark:border-zinc-800" />
-
-              {handleRegistationButton(
-                isCanceled,
-                isPast,
-                isCompleted,
-                isFull,
-                event,
-              )}
+              <EventRegistrationButton
+                eventId={event.id}
+                isRegistered={event.isRegistered}
+                organizerEmail={event.organizerEmail}
+                isCanceled={isCanceled}
+                isPast={isPast}
+                isFull={isFull}
+                isCompleted={isCompleted}
+                organizers={organizers}
+              />
             </div>
           </div>
         </div>

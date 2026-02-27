@@ -20,7 +20,7 @@ export default async function NewEventPage() {
   const organizers = await getUserOrganizers();
 
   return (
-    <RoleGuard allowedRoles={["PROFESSOR", "ADMIN"]}>
+    <RoleGuard allowedRoles={["ORGANIZER", "ADMIN"]}>
       <div className="min-h-screen bg-zinc-50 dark:bg-black py-8 font-sans">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link

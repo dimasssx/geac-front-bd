@@ -13,33 +13,31 @@ const NAV_CONFIG = {
       href: "/events",
       label: "Eventos",
       icon: "📅",
-      roles: ["STUDENT", "PROFESSOR"],
+      roles: ["STUDENT", "PROFESSOR", "ORGANIZER"],
     },
     {
       href: "/meus-eventos",
       label: "Meus Eventos",
       icon: "⭐",
-      roles: ["STUDENT", "PROFESSOR"],
+      roles: ["STUDENT", "PROFESSOR", "ORGANIZER"],
     },
     {
       href: "/certificados",
       label: "Certificados",
       icon: "🎓",
-      roles: ["STUDENT", "PROFESSOR"],
+      roles: ["STUDENT", "PROFESSOR", "ORGANIZER"],
     },
     {
       href: "/requests",
       label: "Solicitar Acesso",
       icon: "🔑",
-      roles: ["STUDENT", "PROFESSOR"],
+      roles: ["STUDENT", "PROFESSOR", "ORGANIZER"],
     },
-  ],
-  professorOnly: [
     {
       href: "/events/new",
       label: "Criar Evento",
       icon: "➕",
-      roles: ["PROFESSOR"],
+      roles: ["ADMIN", "ORGANIZER"],
     },
   ],
   adminOnly: [
@@ -113,12 +111,9 @@ export function Navbar() {
       (item) => !item.roles || item.roles.includes(user?.role || ""),
     );
 
-    const professorItems =
-      user?.role === "PROFESSOR" ? NAV_CONFIG.professorOnly : [];
-
     const adminItems = user?.role === "ADMIN" ? NAV_CONFIG.adminOnly : [];
 
-    return [...baseItems, ...professorItems, ...adminItems];
+    return [...baseItems, ...adminItems];
   };
 
   const visibleItems = getVisibleItems();
@@ -249,10 +244,10 @@ export function Navbar() {
                             }`}
                           >
                             {user?.role === "ADMIN"
-                              ? "⚙️ Administrador"
+                              ? "Administrador"
                               : user?.role === "PROFESSOR"
-                                ? "👨‍🏫 Professor"
-                                : "🎓 Estudante"}
+                                ? "Professor"
+                                : "Estudante"}
                           </span>
                         </div>
                       </div>

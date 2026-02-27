@@ -360,7 +360,7 @@ export default async function EventDetails({
                       {event.organizer}
                     </p>
                     <p className="text-sm text-zinc-500">
-                      {event.organizerType}
+                      {event.organizerEmail}
                     </p>
                   </div>
                 </div>

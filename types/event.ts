@@ -38,13 +38,14 @@ export interface EventRequestDTO {
   startTime: string;
   endTime: string;
   categoryId: number;
-  requirementId: number;
+  requirementIds: number[];
   locationId?: number;
   workloadHours: number;
   maxCapacity: number;
   onlineLink?: string;
   tags: number[];
   speakers: number[];
+  orgId: string;
 }
 
 export interface LocationResponseDTO {

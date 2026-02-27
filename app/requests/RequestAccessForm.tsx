@@ -23,7 +23,7 @@ export default function RequestAccessForm({
   const [success, setSuccess] = useState(false);
 
   const [formData, setFormData] = useState({
-    organizerId: organizers[0]?.id|| "",
+    organizerId: organizers[0]?.id || "",
     justification: "",
   });
 
@@ -55,7 +55,7 @@ export default function RequestAccessForm({
     try {
       const payload = {
         userId: user.id,
-        organizerId:formData.organizerId,
+        organizerId: formData.organizerId,
         justification: formData.justification,
       };
 

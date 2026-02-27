@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { NotificationBell } from "./NotificationBell";
 
 // ✅ CONFIGURAÇÃO CENTRALIZADA - Mude aqui para adicionar/remover itens
 const NAV_CONFIG = {
@@ -173,6 +174,7 @@ export function Navbar() {
           <div className="flex items-center gap-4">
             {isAuthenticated ? (
               <>
+                <NotificationBell />
                 {/* User info - Desktop with dropdown */}
                 <div className="hidden md:block relative" ref={profileRef}>
                   <button

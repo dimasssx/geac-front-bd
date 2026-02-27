@@ -15,7 +15,7 @@ export default async function RequestAccessPage() {
   }
 
   return (
-    <RoleGuard allowedRoles={["STUDENT", "PROFESSOR"]}>
+    <RoleGuard allowedRoles={["STUDENT", "PROFESSOR", "ORGANIZER"]}>
       <div className="min-h-screen bg-zinc-50 dark:bg-black py-12">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">

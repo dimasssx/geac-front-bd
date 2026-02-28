@@ -19,7 +19,10 @@ interface StudentHoursContentProps {
   initialData: StudentHoursDTO[];
 }
 
-type SortField = "studentName" | "totalCertificadosEmitidos" | "totalHorasAcumuladas";
+type SortField =
+  | "studentName"
+  | "totalCertificadosEmitidos"
+  | "totalHorasAcumuladas";
 type SortDirection = "asc" | "desc";
 
 const PAGE_SIZE = 10;
@@ -37,11 +40,11 @@ export default function StudentHoursContent({
     const totalStudents = initialData.length;
     const totalCertificates = initialData.reduce(
       (sum, s) => sum + s.totalCertificadosEmitidos,
-      0
+      0,
     );
     const totalHours = initialData.reduce(
       (sum, s) => sum + s.totalHorasAcumuladas,
-      0
+      0,
     );
     const avgHours =
       totalStudents > 0 ? Math.round(totalHours / totalStudents) : 0;
@@ -56,7 +59,7 @@ export default function StudentHoursContent({
     return initialData.filter(
       (s) =>
         s.studentName.toLowerCase().includes(term) ||
-        s.studentEmail.toLowerCase().includes(term)
+        s.studentEmail.toLowerCase().includes(term),
     );
   }, [initialData, search]);
 
@@ -77,7 +80,7 @@ export default function StudentHoursContent({
   const totalPages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
   const paginated = sorted.slice(
     (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE
+    currentPage * PAGE_SIZE,
   );
 
   // Reset da página ao mudar filtro/busca

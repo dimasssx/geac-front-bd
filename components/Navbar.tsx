@@ -60,6 +60,18 @@ const NAV_CONFIG = {
       icon: "⏱️",
       roles: ["ADMIN"],
     },
+    {
+      href: "/admin/event-statistics",
+      label: "Estatísticas",
+      icon: "📊",
+      roles: ["ADMIN"],
+    },
+    {
+      href: "/admin/org-engagement",
+      label: "Engajamento",
+      icon: "🤝",
+      roles: ["ADMIN"],
+    },
   ],
 };
 

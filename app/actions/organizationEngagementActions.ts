@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { OrganizationEngagementDTO } from "@/types/organizationEngagement";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+const API_URL = process.env.API_URL_INTERNAL || process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 
 export async function getAllOrganizationEngagement(): Promise<
   OrganizationEngagementDTO[]
